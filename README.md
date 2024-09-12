@@ -13,7 +13,7 @@ git clone https://github.com/Roman210302/KVADR_RAG
 pip install -r requirements.txt
 ```
 ### Advanced Baseline
-
+```
 config = {
     'model_name': 'llama3.1-8b-q4',  # llama3.1-8b-q4 / gemma-2-9b-it-simpo-q4 / tlite-q4
     'embed_model_name_short': 'e5l', # e5l (multilingual-e5-large) / ubgem3 (deepvk/USER-bge-m3)
@@ -26,6 +26,6 @@ config = {
     'ensemble_retrievers_weights': [0.4, 0.6], # применяется только если retriever_name=ensemble
     'compressor_name': 'chunks_feature',
     'reranker_name': '' # to be updated
-    'chain_type': 'stuff',
-    
+    'chain_type': 'stuff', 
 }
+```
