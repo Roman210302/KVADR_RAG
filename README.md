@@ -27,9 +27,9 @@ pip install -r requirements.txt
 config = { # The first value in every config-line is baseline version
     'model_name': 'llama3.1-8b-q4',  # llama3.1-8b-q4 / gemma-2-9b-it-simpo-q4 / tlite-q4
     'embed_model_name_short': 'e5l', # e5l (multilingual-e5-large) / bgem3 (bge-m3)
-    'chunk_size': 512, # 512, 1024, 256 
-    'chunk_overlap': 128, 256, 64
-    'llm_framework': 'VLLM', # VLLM / LLamaCpp / Ollama (Ollama is only for gemma2 model)
+    'chunk_size': 512, # 512, 1024, 256
+    'chunk_overlap': 128 # 128, 256, 64
+    'llm_framework': 'VLLM', # VLLM / Ollama (Ollama is only for gemma2 model)
     'vectorstore_name': 'MILVUS', # MILVUS / FAISS
     'retriever_name': 'vectorstore', # 'BM25' / 'vectorstore' / 'ensemble' (ensemble is HybridSearch with BM25 and vectorstore)
     'retriever_k': 4, # how much chunks will return retiever: 4, if reranker, then retriever_k=30 (reranker returns 4)
