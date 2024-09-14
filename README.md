@@ -67,7 +67,15 @@ reranker_config = {
 
 ```
 ### Запуск API
-Наша команда реализовала полностью рабочий API. Запускается скриптом [**master_for_api.py**](master_for_api.py)
+Наша команда реализовала полностью рабочий API. Запускается командой
+```
+uvicorn api:app --reload --port [api_port]
+```
+Веб-интерфейс поднимается командой
+```
+python webui.py --api_port [api_port] --demo_port [demo_port]
+```
+На localhost:[demo_port] поднимается локальная демка чат-бота
 
 ![image](https://github.com/user-attachments/assets/bb981fd1-836a-44aa-ba47-7857f7f4c03b)
 
