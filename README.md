@@ -66,3 +66,27 @@ reranker_config = {
 }
 
 ```
+### Запуск API
+Наша команда реализовала полностью рабочий API. Запускается скриптом [**master_for_api.py**](master_for_api.py)
+
+![image](https://github.com/user-attachments/assets/bb981fd1-836a-44aa-ba47-7857f7f4c03b)
+
+Request {"question":  "string"}
+Response {"response": "string", "context": "string"}
+
+### Конфигурация параметров, которую мы использовали для финального прогона
+Финальный прогон осуществлялся в ноутбуке [**master_final.ipynb**](master_final.ipynb)
+```
+config = {
+    'model_name': 'gemma-2-9b-it-simpo-q4',  # llama3.1-8b-q4 / gemma-2-9b-it-simpo-q4 / tlite-q4
+    'embed_model_name_short': 'e5l', # e5l (multilingual-e5-large) / bgem3 (bge-m3) / ubgem3 (USER-bge-m3)
+    'chunk_size': 512, # либо 512/128, 1024/256, 256/64 (или ?2048/256?)
+    'chunk_overlap': 128,
+    'llm_framework': 'VLLM', # VLLM, LLamaCpp, Ollama
+    'vectorstore_name': 'MILVUS', # база данных MILVUS / FAISS
+    'retriever_name': 'ensemble', # 'vectorstore' / 'ensemble' (BM25 + vertorstore)
+    'retriever_k': 4,
+    'compressor_name': 'gluing_chunks', # None / 'cross_encoder_reranker' / 'gluing_chunks' 
+    'chain_type': 'stuff',
+}
+```
