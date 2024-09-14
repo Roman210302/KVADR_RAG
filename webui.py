@@ -21,6 +21,16 @@ def chat_with_model(user_input, chat_history=[]):
     chat_history.append((user_input, bot_response))
     return chat_history, chat_history, ""
 
+# Function to restart chat (clear the entire history)
+def restart_chat():
+    return [], [], ""
+
+# Function to undo last interaction (remove last user and bot message)
+def undo_last(chat_history):
+    if chat_history:
+        chat_history.pop()  # Remove the last interaction (both user and bot)
+    return chat_history, chat_history, ""
+
 # Create Gradio Blocks with custom CSS for styling
 with gr.Blocks(css="""
     .header {
@@ -71,9 +81,8 @@ with gr.Blocks(css="""
     }
 """) as demo:
     
-    # Create a container for the image and header
     with gr.Column(elem_id="image-container"):
-        gr.Image(value="gerb.png", elem_id="header-image")  # Replace with your image path
+        gr.Image(value="gerb.png", elem_id="header-image") 
         gr.Markdown("<h1 class='header'>KVADR RAG Chat</h1>")
     
     gr.Markdown("<h2 class='subheader'>Данный чат-бот умеет отвечать на вопросы по Нормативным правовым актам Ханты-Мансийского округа.</h2>")
@@ -82,6 +91,11 @@ with gr.Blocks(css="""
     user_input = gr.Textbox(show_label=False, placeholder="Задайте здесь свой вопрос по НПА")
     send_button = gr.Button("Отправить")
 
+    # Additional buttons for restart and clear
+    with gr.Row():
+        restart_button = gr.Button("Перезапустить чат")
+        clear_button = gr.Button("Очистить вход")
+
     chat_history_state = gr.State([])
 
     send_button.click(fn=chat_with_model, inputs=[user_input, chat_history_state], 
@@ -89,7 +103,12 @@ with gr.Blocks(css="""
     user_input.submit(fn=chat_with_model, inputs=[user_input, chat_history_state], 
                       outputs=[chatbox, chat_history_state, user_input])
 
-    # Add an icon at the bottom of the interface directly without wrapping in a Column
-    gr.Image(value="kvadr.png", elem_id="footer-icon-image")  # Replace with your icon image path
+    restart_button.click(fn=restart_chat, inputs=[], outputs=[chatbox, chat_history_state, user_input])
+    clear_button.click(fn=lambda: "", inputs=[], outputs=[user_input])
+
+
+    gr.Image(value="kvadr.png", elem_id="footer-icon-image")
+
+    
 
 demo.launch(server_port=args.demo_port)
